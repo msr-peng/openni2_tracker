@@ -79,6 +79,3 @@ You will probably need to create a free account.
     ```
     
     Currently, this node will broadcast TF frames of the joints of any user being tracked by the tracker.  The frame names are based on the tracker name, currently `/tracker/user_x/joint_name`
-    
-### THANKS!
-Please let me know if something doesnt work, or if you have suggestions (or feel free to add stuff and send a pull request).
