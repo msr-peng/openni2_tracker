@@ -25,13 +25,13 @@ This work is developed from [here](https://github.com/futureneer/openni2-tracker
     sudo ldconfig
     ```
     
-2. Install ASUS Xtion Pro Live OpenNI driver
+2. Install ASUS Xtion Pro Live OpenNI driver:
     
     ```bash
     sudo apt install libopenni-sensor-primesense0
     ```
     
-3. Install NiTE2.2
+3. Install NiTE2.2:
     
     ```bash
     cd  # go home
@@ -49,36 +49,39 @@ This work is developed from [here](https://github.com/futureneer/openni2-tracker
     cd ~/src/NiTE-Linux-x64-2.2/Samples/Bin
     ./UserViewer
     ```
-    If you can see a depth images stream, that means your NiTE work as expected. If you got "no device found" error, you may need to do this:
+    If you got a depth images stream, that means your NiTE work as expected. If you got "no device found" error, you may need to do this:
     
     ```bash
     sudo ln -s /lib/x86_64-linux-gnu/libudev.so.1.6.4 /lib/x86_64-linux-gnu/libudev.so.0
     ````
     
-4. Clone `openni2_tracker` to your ROS workspace
+4. Clone `openni2_tracker` to your ROS workspace:
     ```bash
     cd ~/catkin_ws/src
     git clone git@github.com:msr-peng/openni2_tracker.git
     ```
     
-5. Configure CMake
+5. Configure CMake:
+    
     If you followed Step 1 and Step 2 **strictlly**, then you needn't do anything. Otherwise, you need to modify `CMakeList.txt` in `openni2_tracker` package to make your project can find OpenNI2 and NiTE2.2
     
-6. Make openni2_tracker
+6. Make openni2_tracker:
 
     ```bash
     cd ~/catkin_ws
     catkin_make
     ```
     
-6. Set up NiTE2: Right now, NiTE requires that any executables point to a training sample directory at `.../NiTE-Linux-x64-2.2/Samples/Bin/NiTE2`.  If you run the NiTE sample code, this works fine because those examples are in that same directory.  However, to be able to roslaunch or rosrun openni2_tracker from any current directory, I have created a workaround script `setup_nite.bash`.  This script creates a symbolic link of the NiTE2 directory in your .ros directory (the default working directory for roslaunch / rosrun).  You will need to modify this file so that it points to YOUR NiTE2 and .ros locations.  I would be pleased if anyone has a better solution to this.
+6. Set up NiTE2:
     
-7. Run openni2_tracker
+    Right now, NiTE requires that any executables point to a training sample directory at `.../NiTE-Linux-x64-2.2/Samples/Bin/NiTE2`.  If you run the NiTE sample code, this works fine because those examples are in that same directory.  However, to be able to roslaunch or rosrun openni2_tracker from any current directory, I have created a workaround script `setup_nite.bash`.  This script creates a symbolic link of the NiTE2 directory in your .ros directory (the default working directory for roslaunch / rosrun).  You will need to modify this file so that it points to YOUR NiTE2 and .ros locations.  I would be pleased if anyone has a better solution to this.
+    
+7. Run openni2_tracker:
     
     ```bash
     roslaunch openni2_tracker tracker.launch
     ```
-
+    
     In the lauch file, you can rename both the tracker name and the tracker's relative frame.  I have included a static publisher that aligns the tracker frame to the world frame, approximately 1.25m off the floor.
     
     ```xml
