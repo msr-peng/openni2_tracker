@@ -9,7 +9,7 @@ This work is developed from [here](https://github.com/futureneer/openni2-tracker
 
 ### Installation
 1. Install OpenNI2:
-
+    
     ```bash
     sudo apt install git libusb-1.0-0-dev libudev-dev
     sudo apt install openjdk-8-jdk  # for xenial; openjdk-6-jdk for trusty; if not using other java version.
@@ -26,46 +26,61 @@ This work is developed from [here](https://github.com/futureneer/openni2-tracker
     ```
     
 2. Install ASUS Xtion Pro Live OpenNI driver
-
+    
     ```bash
     sudo apt install libopenni-sensor-primesense0
     ```
-
-2. Install Nite2 from the OpenNI Website [here](http://www.openni.org/files/nite/?count=1&download=http://www.openni.org/wp-content/uploads/2013/10/NiTE-Linux-x64-2.2.tar1.zip).  Be sure to match the version (x86 or x64) with the version of OpenNI2 you installed above.
-You will probably need to create a free account.
-
-    Change directories to the NiTE location and install with 
+    
+3. Install NiTE2.2
     
     ```bash
     cd NiTE-Linux-x64-2.2
     sudo ./install.sh
     ```
     Try and run one of the examples in `.../NiTE-Linux-x64-2.2/Samples/Bin/NiTE2`.  If these don't work, then something went wrong with your installation.
-
-3. Clone `openni2_tracker` to your ROS workspace.
+    
+3. Install NiTE2.2
+    
+    ```bash
+    cd  # go home
+    mkdir -p src; cd src  # create $HOME/src if it doesn't exist; then, enter it
+wget https://sourceforge.net/projects/roboticslab/files/External/nite/NiTE-Linux-x64-2.2.tar.bz2
+    tar xvf NiTE-Linux-x64-2.2.tar.bz2
+    sudo ln -s $PWD/NiTE-Linux-x64-2.2/Redist/libNiTE2.so /usr/local/lib/  # $PWD should be /yourPathTo/NiTE-Linux-x64-2.2/..
+    sudo ln -s $PWD/NiTE-Linux-x64-2.2/Include /usr/local/include/NiTE-Linux-x64-2.2  # $PWD should be /yourPathTo/NiTE-Linux-x64-2.2/..
+    sudo ldconfig
+    ```
+    
+    To make sure your NiTE2.2 can run successfully, you need to run some NiTE built-in binary file:
+    
+    ```bash
+    cd ~/src/NiTE-Linux-x64-2.2/Samples/Bin
+    ./UserViewer
+    ```
+    If you can see a depth images stream, that means your NiTE work as expected. If you got "no device found" error, you may need to do this:
+    
+    ```bash
+    sudo ln -s /lib/x86_64-linux-gnu/libudev.so.1.6.4 /lib/x86_64-linux-gnu/libudev.so.0
+    ````
+    
+4. Clone `openni2_tracker` to your ROS workspace
+    ```bash
+    cd ~/catkin_ws/src
+    git clone git@github.com:msr-peng/openni2_tracker.git
+    ```
+    
+5. Configure CMake
+    If you followed Step 1 and Step 2 **strictlly**, then you needn't do anything. Otherwise, you need to modify `CMakeList.txt` in `openni2_tracker` package to make your project can find OpenNI2 and NiTE2.2
+    
+6. Make openni2_tracker
 
     ```bash
-    git clone git@github.com:futureneer/openni2-tracker.git
-    ```
-
-4. Configure CMake
-    In the CMakeLists.txt file inside the `openni2_tracker` package, you will need to change the path where CMake will look for OpenNI2 and NiTE2.  These two lines:
-    
-    ```makefile
-    set(OPENNI2_DIR ~/dev/OpenNI2)
-    set(NITE2_DIR ~/dev/NiTE-Linux-x64-2.2/)
-    ```
-    need to point to the root directories of where you extracted or cloned OpenNI2 and NiTE2.
-
-    
-5. Make openni2_tracker
-
-    ```bash
-    roscd openni2_tracker
-    rosmake
+    cd ~/catkin_ws
+    catkin_make
     ```
     
 6. Set up NiTE2: Right now, NiTE requires that any executables point to a training sample directory at `.../NiTE-Linux-x64-2.2/Samples/Bin/NiTE2`.  If you run the NiTE sample code, this works fine because those examples are in that same directory.  However, to be able to roslaunch or rosrun openni2_tracker from any current directory, I have created a workaround script `setup_nite.bash`.  This script creates a symbolic link of the NiTE2 directory in your .ros directory (the default working directory for roslaunch / rosrun).  You will need to modify this file so that it points to YOUR NiTE2 and .ros locations.  I would be pleased if anyone has a better solution to this.
+    
 7. Run openni2_tracker
     
     ```bash
