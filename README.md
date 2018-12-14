@@ -1,21 +1,34 @@
 openni2_tracker
 ===============
 
-`openni2_tracker` is a ROS Wrapper for the OpenNI2 and NiTE2 Skeleton Tracker. This is designed as a companion package to the `openni2_camera` package (found [here](https://github.com/ros-drivers/openni2_camera)).  Currently, all this node does is publish TF frames of the current tracked user's joint locations.  I will eventually be adding a user message similar to the old `openni_tracker` ROS package.
+This work is developed from [here](https://github.com/futureneer/openni2-tracker), which is based on out-dated rosbuild system. I made it support catkin system, and write a more detailed README to make user can build their development environment step by step.
 
-** Note:  These instructions only been tested with the Primesense Carmine 1.08 tracker.  There is a way to get this working with the Kinect, using the freenect drivers, but I have not tested that yet.  There is information [here](https://github.com/ros-drivers/openni2_camera) on how to use freenect with OpenNI2.
+`openni2_tracker` is a ROS Wrapper for the OpenNI2 and NiTE2 Skeleton Tracker. This is designed as a companion package to the `openni2_camera` package (found [here](https://github.com/ros-drivers/openni2_camera)).  Currently, all this node does is publish TF frames of the current tracked user's joint locations.
+
+** Note:  These instructions only been tested with ASUS Xtion Pro Live in ROS-kinetic, Ubuntu 16.04.
+
 ### Installation
-1. Clone the beta OpenNI2 repository from Github:
+1. Install OpenNI2:
 
     ```bash
-    git clone git@github.com:OpenNI/OpenNI2.git
+    sudo apt install git libusb-1.0-0-dev libudev-dev
+    sudo apt install openjdk-8-jdk  # for xenial; openjdk-6-jdk for trusty; if not using other java version.
+    sudo apt install freeglut3-dev
+    cd  # go home
+    mkdir -p src; cd src  # create $HOME/src if it doesn't exist; then, enter it
+    git clone https://github.com/occipital/OpenNI2.git  # We used to have a fork off 6857677beee08e264fc5aeecb1adf647a7d616ab with working copy of Xtion Pro Live OpenNI2 driver.
+    cd OpenNI2
+    make -j$(nproc)  # compile
+    sudo ln -s $PWD/Bin/x64-Release/libOpenNI2.so /usr/local/lib/  # $PWD should be /yourPathTo/OpenNI2
+    sudo ln -s $PWD/Bin/x64-Release/OpenNI2/ /usr/local/lib/  # $PWD should be /yourPathTo/OpenNI2
+    sudo ln -s $PWD/Include /usr/local/include/OpenNI2  # $PWD should be /yourPathTo/OpenNI2
+    sudo ldconfig
     ```
     
-    Then, switch to the OpenNI2 directory and build:
-    
+2. Install ASUS Xtion Pro Live OpenNI driver
+
     ```bash
-    cd OpenNI2
-    make
+    sudo apt install libopenni-sensor-primesense0
     ```
 
 2. Install Nite2 from the OpenNI Website [here](http://www.openni.org/files/nite/?count=1&download=http://www.openni.org/wp-content/uploads/2013/10/NiTE-Linux-x64-2.2.tar1.zip).  Be sure to match the version (x86 or x64) with the version of OpenNI2 you installed above.
