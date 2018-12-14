@@ -36,7 +36,7 @@ This work is developed from [here](https://github.com/futureneer/openni2-tracker
     ```bash
     cd  # go home
     mkdir -p src; cd src  # create $HOME/src if it doesn't exist; then, enter it
-wget https://sourceforge.net/projects/roboticslab/files/External/nite/NiTE-Linux-x64-2.2.tar.bz2
+    wget https://sourceforge.net/projects/roboticslab/files/External/nite/NiTE-Linux-x64-2.2.tar.bz2
     tar xvf NiTE-Linux-x64-2.2.tar.bz2
     sudo ln -s $PWD/NiTE-Linux-x64-2.2/Redist/libNiTE2.so /usr/local/lib/  # $PWD should be /yourPathTo/NiTE-Linux-x64-2.2/..
     sudo ln -s $PWD/NiTE-Linux-x64-2.2/Include /usr/local/include/NiTE-Linux-x64-2.2  # $PWD should be /yourPathTo/NiTE-Linux-x64-2.2/..
