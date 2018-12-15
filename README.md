@@ -5,7 +5,7 @@ This work is developed from [here](https://github.com/futureneer/openni2-tracker
 
 `openni2_tracker` is a ROS Wrapper for the OpenNI2 and NiTE2 Skeleton Tracker. This is designed as a companion package to the `openni2_camera` package (found [here](https://github.com/ros-drivers/openni2_camera)).  Currently, all this node does is publish TF frames of the current tracked user's joint locations.
 
-** Note:  These instructions only been tested with ASUS Xtion Pro Live in ROS-kinetic, Ubuntu 16.04. You can directly access to the **docker image** file which support all software development environment within OpenGL visualization at [here](https://cloud.docker.com/repository/docker/bluebirdpp/openni2/tags), or just run the following command to get the docker image:
+**Note**:  These instructions only been tested with ASUS Xtion Pro Live in ROS-kinetic, Ubuntu 16.04. You can directly access to the **docker image** file which support all software development environment within OpenGL visualization at [here](https://cloud.docker.com/repository/docker/bluebirdpp/openni2/tags), or just run the following command to get the docker image:
    ```bash
    docker pull bluebirdpp/openni2:latest
    ```
